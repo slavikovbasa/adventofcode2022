@@ -10,7 +10,7 @@ fn main() {
     let res1 = day::solve1(&text);
     println!("res1({}s): {}", now.elapsed().as_secs(), res1);
 
-    // let now = Instant::now();
-    // let res2 = day::solve2(&text);
-    // println!("res2({}s): {}", now.elapsed().as_secs(), res2);
+    let now = Instant::now();
+    let res2 = day::solve2(&text);
+    println!("res2({}s): {}", now.elapsed().as_secs(), res2);
 }
