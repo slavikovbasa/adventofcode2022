@@ -1,7 +1,7 @@
 use std::time::Instant;
 
 use adventofcode::client;
-use adventofcode::day01 as day;
+use adventofcode::day02 as day;
 
 fn main() {
     let text = client::fetch(day::URL);
