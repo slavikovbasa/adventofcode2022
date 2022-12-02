@@ -2,17 +2,6 @@ use core::panic;
 
 pub const URL: &str = "https://adventofcode.com/2022/day/2/input";
 
-struct GameResult {
-    outcome: Outcome,
-    move_: Move,
-}
-
-impl GameResult {
-    fn score(&self) -> u32 {
-        self.outcome.score() + self.move_.score()
-    }
-}
-
 enum Outcome {
     Win,
     Draw,
@@ -98,10 +87,6 @@ impl Move {
 
         if self.get_weaker() == other { Outcome::Win } else { Outcome::Lose }
     }
-
-    fn play(self, other: Self) -> GameResult {
-        GameResult{ outcome: self.outcome(other), move_: self }
-    }
 }
 
 
@@ -111,7 +96,10 @@ pub fn solve1(text: &str) -> u32 {
         |x| {
             let mut moves = x.split_whitespace();
             let (left, right) = (moves.next().unwrap(), moves.next().unwrap());
-            Move::from_str(right).play(Move::from_str(left)).score()
+            let opponent_move = Move::from_str(left);
+            let my_move = Move::from_str(right);
+            let outcome = my_move.outcome(opponent_move);
+            my_move.score() + outcome.score()
         }
     ).sum()
 }
@@ -123,7 +111,8 @@ pub fn solve2(text: &str) -> u32 {
             let (left, right) = (moves.next().unwrap(), moves.next().unwrap());
             let opponent_move = Move::from_str(left);
             let outcome = Outcome::from_str(right);
-            Move::from_outcome(opponent_move, &outcome).score() + outcome.score()
+            let my_move = Move::from_outcome(opponent_move, &outcome);
+            my_move.score() + outcome.score()
         }
     ).sum()
 }
